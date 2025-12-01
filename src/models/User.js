@@ -1,3 +1,5 @@
+// for user model
+
 const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(

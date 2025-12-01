@@ -1,3 +1,5 @@
+// validation schemas for authentication
+
 const { z } = require("zod");
 
 const registerSchema = z.object({

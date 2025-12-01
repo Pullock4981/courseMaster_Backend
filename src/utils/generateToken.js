@@ -1,3 +1,5 @@
+// utility to generate JWT token
+
 const jwt = require("jsonwebtoken");
 
 const generateToken = (payload) => {

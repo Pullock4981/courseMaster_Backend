@@ -1,3 +1,5 @@
+// controller for authentication routes
+
 const authService = require("../services/auth.service");
 
 const register = async (req, res) => {
