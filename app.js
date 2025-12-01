@@ -4,6 +4,10 @@ const cors = require("cors");
 const authRoutes = require("./src/routes/auth.routes");
 // importing course routes
 const courseRoutes = require("./src/routes/course.routes");
+// importing admin routes
+const adminRoutes = require("./src/routes/admin.routes");
+// importing enrollment routes
+const enrollmentRoutes = require("./src/routes/enrollment.routes");
 
 const app = express();
 
@@ -19,5 +23,9 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 // mounting course routes
 app.use("/api/courses", courseRoutes);
+// mounting admin routes
+app.use("/api/admin", adminRoutes);
+// mounting enrollment routes
+app.use("/api/enrollments", enrollmentRoutes);
 
 module.exports = app;
