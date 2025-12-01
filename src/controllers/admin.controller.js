@@ -29,4 +29,30 @@ const deleteCourse = async (req, res) => {
   }
 };
 
-module.exports = { createCourse, updateCourse, deleteCourse };
+// ✅ NEW: enrollments list
+const getEnrollments = async (req, res) => {
+  try {
+    const data = await adminService.getEnrollments(req.query);
+    res.json(data);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+// ✅ NEW: assignments list
+const getAssignments = async (req, res) => {
+  try {
+    const data = await adminService.getAssignments();
+    res.json(data);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+module.exports = {
+  createCourse,
+  updateCourse,
+  deleteCourse,
+  getEnrollments,
+  getAssignments,
+};

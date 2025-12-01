@@ -8,6 +8,12 @@ const courseRoutes = require("./src/routes/course.routes");
 const adminRoutes = require("./src/routes/admin.routes");
 // importing enrollment routes
 const enrollmentRoutes = require("./src/routes/enrollment.routes");
+// importing assignment routes
+const assignmentRoutes = require("./src/routes/assignment.routes");
+// importing quiz routes
+const quizRoutes = require("./src/routes/quiz.routes");
+// importing error handling middleware
+const errorHandler = require("./src/middlewares/errorMiddleware");
 
 const app = express();
 
@@ -27,5 +33,12 @@ app.use("/api/courses", courseRoutes);
 app.use("/api/admin", adminRoutes);
 // mounting enrollment routes
 app.use("/api/enrollments", enrollmentRoutes);
+// mounting assignment routes
+app.use("/api/assignments", assignmentRoutes);
+// mounting quiz routes
+app.use("/api/quizzes", quizRoutes);
+// global error handling middleware
+app.use(errorHandler);
+
 
 module.exports = app;

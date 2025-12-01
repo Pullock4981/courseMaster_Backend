@@ -10,4 +10,8 @@ router.post("/courses", authMiddleware, adminMiddleware, adminController.createC
 router.patch("/courses/:id", authMiddleware, adminMiddleware, adminController.updateCourse);
 router.delete("/courses/:id", authMiddleware, adminMiddleware, adminController.deleteCourse);
 
+// ✅ NEW: lists
+router.get("/enrollments", authMiddleware, adminMiddleware, adminController.getEnrollments);
+router.get("/assignments", authMiddleware, adminMiddleware, adminController.getAssignments);
+
 module.exports = router;

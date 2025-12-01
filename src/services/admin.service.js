@@ -1,6 +1,8 @@
 // service to handle admin-related operations
 
 const Course = require("../models/Course");
+const Enrollment = require("../models/Enrollment");
+const AssignmentSubmission = require("../models/AssignmentSubmission");
 
 const createCourse = async (payload) => {
   const course = await Course.create(payload);
@@ -19,4 +21,32 @@ const deleteCourse = async (id) => {
   return { message: "Course deleted" };
 };
 
-module.exports = { createCourse, updateCourse, deleteCourse };
+// ✅ NEW: get enrollments (with optional filters)
+const getEnrollments = async (query) => {
+  const { courseId, batchId } = query;
+
+  const filter = {};
+  if (courseId) filter.course = courseId;
+  if (batchId) filter.batchId = batchId;
+
+  return Enrollment.find(filter)
+    .populate("student", "name email")
+    .populate("course", "title instructorName")
+    .sort({ createdAt: -1 });
+};
+
+// ✅ NEW: get all assignment submissions
+const getAssignments = async () => {
+  return AssignmentSubmission.find()
+    .populate("student", "name email")
+    .populate("course", "title")
+    .sort({ createdAt: -1 });
+};
+
+module.exports = {
+  createCourse,
+  updateCourse,
+  deleteCourse,
+  getEnrollments,
+  getAssignments,
+};
