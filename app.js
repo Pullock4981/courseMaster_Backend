@@ -15,6 +15,9 @@ const quizRoutes = require("./src/routes/quiz.routes");
 // importing error handling middleware
 const errorHandler = require("./src/middlewares/errorMiddleware");
 
+const connectDB = require("./src/config/db");
+connectDB();
+
 const app = express();
 
 app.use(cors());
@@ -37,8 +40,13 @@ app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/assignments", assignmentRoutes);
 // mounting quiz routes
 app.use("/api/quizzes", quizRoutes);
+
+// 404 handler (unknown routes)
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
+
 // global error handling middleware
 app.use(errorHandler);
-
 
 module.exports = app;
