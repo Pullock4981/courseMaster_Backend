@@ -14,6 +14,8 @@ const assignmentRoutes = require("./src/routes/assignment.routes");
 const quizRoutes = require("./src/routes/quiz.routes");
 // importing error handling middleware
 const errorHandler = require("./src/middlewares/errorMiddleware");
+// importing user model to ensure it's registered
+const userRoutes = require("./src/routes/user.routes");
 
 const connectDB = require("./src/config/db");
 connectDB();
@@ -40,6 +42,9 @@ app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/assignments", assignmentRoutes);
 // mounting quiz routes
 app.use("/api/quizzes", quizRoutes);
+// mounting user routes
+app.use("/api/users", userRoutes);
+
 
 // 404 handler (unknown routes)
 app.use((req, res) => {
