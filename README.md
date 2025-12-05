@@ -2,6 +2,8 @@
 
 A RESTful API for the CourseMaster E-learning platform built with Node.js, Express, and MongoDB.
 
+Video Link: https://drive.google.com/file/d/1vjMrBxr0-7xqjxMX2EBEBw30D_av1pOu/view
+
 ## Project Name & Description
 
 **CourseMaster Backend** provides a comprehensive RESTful API for managing an E-learning platform. It handles authentication, course management, enrollments, assignments, quizzes, and administrative operations. The backend is built with Node.js and Express.js, using MongoDB for data storage and JWT for authentication.
