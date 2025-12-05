@@ -105,7 +105,7 @@ Base URL: `https://course-master-backend-ochre.vercel.app/api`
     "name": "John Doe",
     "email": "john@example.com",
     "password": "password123",
-    "adminKey": "optional-admin-key" // Optional: Required only for admin registration
+    "adminKey": "optional-admin-key" 
   }
   ```
 - **Response:** User object with token
