@@ -37,10 +37,35 @@ const getEnrollments = async (query) => {
 
 // ✅ NEW: get all assignment submissions
 const getAssignments = async () => {
-  return AssignmentSubmission.find()
+  const submissions = await AssignmentSubmission.find()
     .populate("student", "name email")
-    .populate("course", "title")
+    .populate("course", "title syllabus")
+    .populate("reviewer", "name")
     .sort({ createdAt: -1 });
+
+  // Add lesson title to each submission
+  const submissionsWithLessonTitle = submissions.map((sub) => {
+    const submissionObj = sub.toObject();
+    let lessonTitle = "Unknown Lesson";
+
+    if (sub.course && sub.course.syllabus) {
+      for (const module of sub.course.syllabus) {
+        for (const lesson of module.lessons || []) {
+          if (String(lesson._id) === String(sub.lessonId)) {
+            lessonTitle = lesson.title;
+            submissionObj.assignmentPrompt = lesson.assignmentPrompt || "";
+            break;
+          }
+        }
+        if (lessonTitle !== "Unknown Lesson") break;
+      }
+    }
+
+    submissionObj.lessonTitle = lessonTitle;
+    return submissionObj;
+  });
+
+  return submissionsWithLessonTitle;
 };
 
 // review/update an assignment submission (admin)
