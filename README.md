@@ -2,6 +2,8 @@
 
 A RESTful API for the CourseMaster E-learning platform built with Node.js, Express, and MongoDB.
 
+Backend live link: https://vercel.com/syed-ashik-mahmud-pullocks-projects/course-master-backend
+
 Video Link: https://drive.google.com/file/d/1vjMrBxr0-7xqjxMX2EBEBw30D_av1pOu/view
 
 ## Project Name & Description
