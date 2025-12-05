@@ -6,6 +6,9 @@ Backend live link: https://vercel.com/syed-ashik-mahmud-pullocks-projects/course
 
 Video Link: https://drive.google.com/file/d/1vjMrBxr0-7xqjxMX2EBEBw30D_av1pOu/view
 
+Admin email: admin@coursemaster.com
+Pass: admin123
+
 ## Project Name & Description
 
 **CourseMaster Backend** provides a comprehensive RESTful API for managing an E-learning platform. It handles authentication, course management, enrollments, assignments, quizzes, and administrative operations. The backend is built with Node.js and Express.js, using MongoDB for data storage and JWT for authentication.
