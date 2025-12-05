@@ -78,10 +78,14 @@ const reviewAssignment = async (id, payload, adminId) => {
   if (typeof grade !== "undefined") update.grade = grade;
   if (adminId) update.reviewer = adminId;
 
-  const submission = await AssignmentSubmission.findByIdAndUpdate(id, update, { new: true });
+  const submission = await AssignmentSubmission.findByIdAndUpdate(id, update, { new: true })
+    .populate("student", "name email")
+    .populate("course", "title")
+    .populate("reviewer", "name");
+
   if (!submission) throw new Error("Submission not found");
 
-  return submission.populate("student", "name email").populate("course", "title");
+  return submission;
 };
 
 module.exports = {
