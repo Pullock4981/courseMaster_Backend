@@ -11,11 +11,25 @@ const submitAssignment = async (req, res) => {
 
 const mySubmissions = async (req, res) => {
   try {
-    const data = await assignmentService.getMySubmissions(req.user.id);
+    const { courseId } = req.query;
+    const data = await assignmentService.getMySubmissions(req.user.id, courseId);
     res.json(data);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
 
-module.exports = { submitAssignment, mySubmissions };
+const getAssignmentStats = async (req, res) => {
+  try {
+    const { courseId } = req.query;
+    if (!courseId) {
+      return res.status(400).json({ message: "courseId is required" });
+    }
+    const data = await assignmentService.getAssignmentStats(req.user.id, courseId);
+    res.json(data);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+module.exports = { submitAssignment, mySubmissions, getAssignmentStats };

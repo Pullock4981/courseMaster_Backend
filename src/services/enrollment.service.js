@@ -5,7 +5,19 @@ const enrollCourse = async (studentId, courseId, batchId = null) => {
   const course = await Course.findById(courseId);
   if (!course) throw new Error("Course not found");
 
-  const enrollment = await Enrollment.create({
+  // Check if already enrolled
+  let enrollment = await Enrollment.findOne({
+    student: studentId,
+    course: courseId,
+  });
+
+  if (enrollment) {
+    // Already enrolled, return existing enrollment
+    return enrollment;
+  }
+
+  // Create new enrollment
+  enrollment = await Enrollment.create({
     student: studentId,
     course: courseId,
     batchId,
