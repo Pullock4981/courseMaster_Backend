@@ -49,10 +49,22 @@ const getAssignments = async (req, res) => {
   }
 };
 
+// review an assignment submission
+const reviewAssignment = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = await adminService.reviewAssignment(id, req.body, req.user.id);
+    res.json(data);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createCourse,
   updateCourse,
   deleteCourse,
   getEnrollments,
   getAssignments,
+  reviewAssignment,
 };

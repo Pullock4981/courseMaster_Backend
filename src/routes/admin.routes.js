@@ -13,5 +13,12 @@ router.delete("/courses/:id", authMiddleware, adminMiddleware, adminController.d
 // ✅ NEW: lists
 router.get("/enrollments", authMiddleware, adminMiddleware, adminController.getEnrollments);
 router.get("/assignments", authMiddleware, adminMiddleware, adminController.getAssignments);
+// review assignment submission
+router.patch(
+    "/assignments/:id/review",
+    authMiddleware,
+    adminMiddleware,
+    adminController.reviewAssignment
+);
 
 module.exports = router;

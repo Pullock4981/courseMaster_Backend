@@ -43,10 +43,27 @@ const getAssignments = async () => {
     .sort({ createdAt: -1 });
 };
 
+// review/update an assignment submission (admin)
+const reviewAssignment = async (id, payload, adminId) => {
+  const { reviewNotes, grade, status } = payload;
+
+  const update = {};
+  if (typeof status !== "undefined") update.status = status;
+  if (typeof reviewNotes !== "undefined") update.reviewNotes = reviewNotes;
+  if (typeof grade !== "undefined") update.grade = grade;
+  if (adminId) update.reviewer = adminId;
+
+  const submission = await AssignmentSubmission.findByIdAndUpdate(id, update, { new: true });
+  if (!submission) throw new Error("Submission not found");
+
+  return submission.populate("student", "name email").populate("course", "title");
+};
+
 module.exports = {
   createCourse,
   updateCourse,
   deleteCourse,
   getEnrollments,
   getAssignments,
+  reviewAssignment,
 };
