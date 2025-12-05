@@ -60,6 +60,16 @@ const reviewAssignment = async (req, res) => {
   }
 };
 
+// get analytics data
+const getAnalytics = async (req, res) => {
+  try {
+    const data = await adminService.getAnalytics();
+    res.json(data);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createCourse,
   updateCourse,
@@ -67,4 +77,5 @@ module.exports = {
   getEnrollments,
   getAssignments,
   reviewAssignment,
+  getAnalytics,
 };

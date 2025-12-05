@@ -3,6 +3,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const generateToken = require("../utils/generateToken");
+const { sendWelcomeEmail } = require("./email.service");
 
 const register = async ({ name, email, password }) => {
   const exists = await User.findOne({ email });
@@ -18,6 +19,11 @@ const register = async ({ name, email, password }) => {
   });
 
   const token = generateToken({ id: user._id, role: user.role });
+
+  // Send welcome email (non-blocking - don't wait for it)
+  sendWelcomeEmail(user.email, user.name).catch(err => {
+    console.error('Email sending failed (non-critical):', err.message);
+  });
 
   return {
     token,

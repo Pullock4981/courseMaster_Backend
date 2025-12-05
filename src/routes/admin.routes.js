@@ -20,5 +20,7 @@ router.patch(
     adminMiddleware,
     adminController.reviewAssignment
 );
+// analytics
+router.get("/analytics", authMiddleware, adminMiddleware, adminController.getAnalytics);
 
 module.exports = router;

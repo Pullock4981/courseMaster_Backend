@@ -50,7 +50,20 @@ PORT=5000
 MONGODB_URI=mongodb://localhost:27017/coursemaster
 JWT_SECRET=your-secret-key-here
 NODE_ENV=development
+
+# Email Configuration (Optional - for welcome emails)
+EMAIL_SERVICE=gmail
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASSWORD=your-app-password
+FRONTEND_URL=http://localhost:5173
 ```
+
+**Note for Email Setup:**
+- For Gmail, you need to:
+  1. Enable 2-Factor Authentication
+  2. Generate an App Password (not your regular password)
+  3. Use the App Password in `EMAIL_PASSWORD`
+- If email is not configured, the app will still work but won't send welcome emails
 
 ## API Documentation
 
@@ -207,6 +220,14 @@ Base URL: `https://course-master-backend-ochre.vercel.app/api`
 - **Headers:** `Authorization: Bearer <token>`
 - **Response:** Array of assignment submissions
 
+#### Get Analytics
+- **GET** `/api/admin/analytics`
+- **Headers:** `Authorization: Bearer <token>` (Admin only)
+- **Response:** Analytics data including:
+  - Chart data for enrollments over last 30 days
+  - Top courses by enrollments
+  - Platform statistics (total enrollments, courses, students, instructors)
+
 #### Review Assignment
 - **PATCH** `/api/admin/assignments/:id/review`
 - **Headers:** `Authorization: Bearer <token>`
@@ -291,6 +312,21 @@ Common HTTP Status Codes:
 - `403` - Forbidden
 - `404` - Not Found
 - `500` - Internal Server Error
+
+## Bonus Features
+
+### Email Notifications
+- Welcome emails are automatically sent to new users upon registration
+- Uses Nodemailer for email delivery
+- Configure email settings in `.env` file
+- Email sending is non-blocking (won't fail registration if email fails)
+
+### Analytics Dashboard
+- Admin analytics dashboard with enrollment trends
+- Charts showing enrollments over the last 30 days
+- Top courses by enrollment statistics
+- Platform-wide statistics (total enrollments, courses, students, instructors)
+- Accessible at `/admin/analytics` (admin only)
 
 ## Security Features
 
