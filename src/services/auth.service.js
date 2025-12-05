@@ -5,17 +5,30 @@ const User = require("../models/User");
 const generateToken = require("../utils/generateToken");
 const { sendWelcomeEmail } = require("./email.service");
 
-const register = async ({ name, email, password }) => {
+const register = async ({ name, email, password, adminKey }) => {
   const exists = await User.findOne({ email });
   if (exists) throw new Error("Email already registered");
 
   const passwordHash = await bcrypt.hash(password, 10);
 
+  // Check if admin key is provided and valid
+  let role = "student";
+  if (adminKey) {
+    const validAdminKey = process.env.ADMIN_REGISTRATION_KEY;
+    if (!validAdminKey) {
+      throw new Error("Admin registration is not configured");
+    }
+    if (adminKey !== validAdminKey) {
+      throw new Error("Invalid admin registration key");
+    }
+    role = "admin";
+  }
+
   const user = await User.create({
     name,
     email,
     passwordHash,
-    role: "student",
+    role,
   });
 
   const token = generateToken({ id: user._id, role: user.role });

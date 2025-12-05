@@ -1,10 +1,10 @@
-# Course Master - Backend API
+# CourseMaster - Backend API
 
-A RESTful API for the Course Master E-learning platform built with Node.js, Express, and MongoDB.
+A RESTful API for the CourseMaster E-learning platform built with Node.js, Express, and MongoDB.
 
-## Project Description
+## Project Name & Description
 
-Course Master Backend provides a comprehensive API for managing an E-learning platform. It handles authentication, course management, enrollments, assignments, quizzes, and administrative operations.
+**CourseMaster Backend** provides a comprehensive RESTful API for managing an E-learning platform. It handles authentication, course management, enrollments, assignments, quizzes, and administrative operations. The backend is built with Node.js and Express.js, using MongoDB for data storage and JWT for authentication.
 
 ## Technology Stack
 
@@ -43,12 +43,22 @@ Course Master Backend provides a comprehensive API for managing an E-learning pl
 
 ## Environment Variables
 
-Create a `.env` file with the following variables:
+Create a `.env` file in the root directory with the following variables (see `.env.example` for reference):
 
 ```env
+# Server Configuration
 PORT=5000
+
+# Database
 MONGODB_URI=mongodb://localhost:27017/coursemaster
-JWT_SECRET=your-secret-key-here
+
+# JWT Secret
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+
+# Admin Registration Key (Optional - for admin account creation)
+ADMIN_REGISTRATION_KEY=your-secret-admin-key-here
+
+# Node Environment
 NODE_ENV=development
 
 # Email Configuration (Optional - for welcome emails)
@@ -57,6 +67,22 @@ EMAIL_USER=your-email@gmail.com
 EMAIL_PASSWORD=your-app-password
 FRONTEND_URL=http://localhost:5173
 ```
+
+**Required Variables:**
+- `PORT` - Server port (default: 5000)
+- `MONGODB_URI` - MongoDB connection string (required)
+- `JWT_SECRET` - Secret key for JWT token generation (required)
+
+**Optional Variables:**
+- `NODE_ENV` - Environment mode (development/production)
+- `ADMIN_REGISTRATION_KEY` - Secret key for admin account registration (optional)
+  - If set, users can register as admin by providing this key during registration
+  - If not set, admin registration via key is disabled
+  - Admins can still be created manually in the database
+- `EMAIL_SERVICE` - Email service provider (gmail, smtp, etc.)
+- `EMAIL_USER` - Email address for sending welcome emails
+- `EMAIL_PASSWORD` - Email password or app password
+- `FRONTEND_URL` - Frontend URL for email links
 
 **Note for Email Setup:**
 - For Gmail, you need to:
@@ -78,10 +104,15 @@ Base URL: `https://course-master-backend-ochre.vercel.app/api`
   {
     "name": "John Doe",
     "email": "john@example.com",
-    "password": "password123"
+    "password": "password123",
+    "adminKey": "optional-admin-key" // Optional: Required only for admin registration
   }
   ```
 - **Response:** User object with token
+- **Note:** 
+  - By default, users are registered as "student"
+  - To register as "admin", provide a valid `adminKey` that matches `ADMIN_REGISTRATION_KEY` in environment variables
+  - If invalid admin key is provided, registration will fail
 
 #### Login
 - **POST** `/api/auth/login`
@@ -328,12 +359,29 @@ Common HTTP Status Codes:
 - Platform-wide statistics (total enrollments, courses, students, instructors)
 - Accessible at `/admin/analytics` (admin only)
 
+## Admin Registration
+
+Admins can be created in two ways:
+
+1. **Registration Key Method (Recommended)**:
+   - Set `ADMIN_REGISTRATION_KEY` in your `.env` file
+   - During registration, provide the admin key in the registration form
+   - If the key matches, the user will be created as "admin"
+   - If the key is invalid or missing, registration will fail or create a student account
+
+2. **Manual Database Method**:
+   - Create admin users directly in the database
+   - Set the `role` field to "admin" in the User document
+
+**Note**: If `ADMIN_REGISTRATION_KEY` is not set in `.env`, admin registration via key is disabled for security.
+
 ## Security Features
 
 - Password hashing with bcrypt
 - JWT token-based authentication
 - Protected routes with middleware
 - Admin-only routes with role checking
+- Admin registration key protection
 - Input validation with Zod
 - CORS enabled
 
