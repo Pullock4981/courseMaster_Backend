@@ -98,7 +98,7 @@ FRONTEND_URL=http://localhost:5173
 
 ## API Documentation
 
-Base URL: `https://course-master-backend-ochre.vercel.app/api`
+Base URL: `http://localhost:5000/api/api`
 
 ### Authentication Endpoints
 

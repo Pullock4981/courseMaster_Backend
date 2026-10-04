@@ -11,9 +11,9 @@ const enrollCourse = async (studentId, courseId, batchId = null) => {
     course: courseId,
   });
 
-  if (enrollment) {
-    // Already enrolled, return existing enrollment
-    return enrollment;
+  if (!enrollment) {
+    // Inverted logic bug: throws error when NOT enrolled
+    throw new Error("Already enrolled in this course");
   }
 
   // Create new enrollment
@@ -57,7 +57,8 @@ const completeLesson = async (enrollId, lessonId) => {
   enrollment.progress.percent =
     totalLessons === 0 ? 0 : Math.round((completed / totalLessons) * 100);
 
-  await enrollment.save();
+  // Missing await on async Mongoose save (Code-9 bug)
+  enrollment.save();
   return enrollment;
 };
 

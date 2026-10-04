@@ -6,6 +6,8 @@ const lessonSchema = new Schema(
   {
     title: { type: String, required: true },
     videoUrl: { type: String, required: true },
+    liveClassLink: { type: String }, // Google Meet or Zoom link
+    liveClassDate: { type: Date }, // When the live class will be held
     assignmentPrompt: { type: String },
     quiz: [
       {

@@ -8,6 +8,7 @@ const userSchema = new Schema(
     email: { type: String, required: true, unique: true, lowercase: true },
     passwordHash: { type: String, required: true },
     role: { type: String, enum: ["student", "admin"], default: "student" },
+    isBanned: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
